@@ -1,12 +1,1330 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto Integrador</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Água que não vemos — Água Virtual, Química e Limites Planetários</title>
+
+<style>
+:root{
+    --azul:#075985;
+    --azul2:#0284c7;
+    --azul-claro:#e0f2fe;
+    --verde:#15803d;
+    --verde-claro:#dcfce7;
+    --amarelo:#ca8a04;
+    --amarelo-claro:#fef9c3;
+    --vermelho:#b91c1c;
+    --vermelho-claro:#fee2e2;
+    --roxo:#6d28d9;
+    --cinza:#475569;
+    --fundo:#f8fafc;
+    --branco:#ffffff;
+    --texto:#0f172a;
+    --borda:#cbd5e1;
+    --sombra:0 8px 25px rgba(15,23,42,.08);
+}
+
+*{
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--texto);
+    background:var(--fundo);
+    line-height:1.65;
+}
+
+header{
+    background:
+        linear-gradient(135deg,rgba(3,105,161,.94),rgba(6,78,59,.94)),
+        radial-gradient(circle at top right,#38bdf8,transparent 35%);
+    color:white;
+    padding:70px 20px 80px;
+    text-align:center;
+}
+
+header .gota{
+    font-size:4rem;
+    margin-bottom:10px;
+}
+
+header h1{
+    max-width:1050px;
+    margin:0 auto 20px;
+    font-size:clamp(2.2rem,6vw,4.5rem);
+    line-height:1.05;
+}
+
+header p{
+    max-width:850px;
+    margin:auto;
+    font-size:1.2rem;
+    opacity:.95;
+}
+
+nav{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:#082f49;
+    box-shadow:0 3px 12px rgba(0,0,0,.18);
+}
+
+nav ul{
+    max-width:1200px;
+    margin:auto;
+    padding:0;
+    list-style:none;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:13px 15px;
+    display:block;
+    font-size:.9rem;
+}
+
+nav a:hover{
+    background:#0c4a6e;
+}
+
+main{
+    max-width:1200px;
+    margin:auto;
+    padding:35px 20px 70px;
+}
+
+section{
+    margin:55px 0;
+}
+
+h2{
+    color:var(--azul);
+    font-size:2.2rem;
+    margin-bottom:12px;
+}
+
+h3{
+    color:#0c4a6e;
+}
+
+.intro{
+    font-size:1.15rem;
+    max-width:950px;
+}
+
+.card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:20px;
+    margin:25px 0;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--borda);
+    border-radius:18px;
+    padding:24px;
+    box-shadow:var(--sombra);
+}
+
+.card strong.numero{
+    display:block;
+    font-size:2.4rem;
+    color:var(--azul2);
+    line-height:1;
+    margin-bottom:10px;
+}
+
+.highlight{
+    border-left:6px solid var(--azul2);
+    background:var(--azul-claro);
+    padding:20px 24px;
+    border-radius:8px;
+    margin:25px 0;
+}
+
+.warning{
+    border-left:6px solid var(--amarelo);
+    background:var(--amarelo-claro);
+    padding:20px 24px;
+    border-radius:8px;
+}
+
+.danger{
+    border-left:6px solid var(--vermelho);
+    background:var(--vermelho-claro);
+    padding:20px 24px;
+    border-radius:8px;
+}
+
+.success{
+    border-left:6px solid var(--verde);
+    background:var(--verde-claro);
+    padding:20px 24px;
+    border-radius:8px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:25px 0;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:var(--sombra);
+}
+
+th,td{
+    padding:13px 15px;
+    border-bottom:1px solid #e2e8f0;
+    text-align:left;
+}
+
+th{
+    background:#075985;
+    color:white;
+}
+
+tr:hover td{
+    background:#f0f9ff;
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:.8rem;
+    font-weight:bold;
+}
+
+.safe{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.risk{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.beyond{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.chart{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:var(--sombra);
+    margin:25px 0;
+    overflow-x:auto;
+}
+
+.chart svg{
+    width:100%;
+    min-width:650px;
+    height:auto;
+}
+
+.bar{
+    transition:.3s;
+}
+
+.bar:hover{
+    opacity:.75;
+}
+
+.legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-top:12px;
+    font-size:.9rem;
+}
+
+.legend span{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.dot{
+    width:13px;
+    height:13px;
+    display:inline-block;
+    border-radius:3px;
+}
+
+.chemistry{
+    background:linear-gradient(135deg,#eef2ff,#f5f3ff);
+    border:1px solid #c4b5fd;
+    border-radius:18px;
+    padding:28px;
+}
+
+.formula{
+    font-family:"Courier New",monospace;
+    background:#111827;
+    color:#a7f3d0;
+    padding:20px;
+    border-radius:12px;
+    overflow:auto;
+    font-size:1rem;
+}
+
+.flow{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+    align-items:center;
+    margin:30px 0;
+}
+
+.flow-item{
+    text-align:center;
+    padding:18px 10px;
+    background:white;
+    border-radius:12px;
+    border:2px solid #bae6fd;
+}
+
+.arrow{
+    text-align:center;
+    font-size:1.5rem;
+    color:var(--azul2);
+}
+
+@media(max-width:700px){
+    .flow{
+        grid-template-columns:1fr;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+
+    nav a{
+        padding:9px 8px;
+        font-size:.75rem;
+    }
+
+    table{
+        font-size:.88rem;
+    }
+}
+
+.calculator{
+    background:#0f172a;
+    color:white;
+    padding:30px;
+    border-radius:18px;
+    margin-top:25px;
+}
+
+.calculator input,
+.calculator select{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #64748b;
+    margin:5px 0 15px;
+    font-size:1rem;
+}
+
+.calc-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+}
+
+button{
+    background:#0284c7;
+    border:0;
+    color:white;
+    padding:13px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:1rem;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#0369a1;
+}
+
+.resultado{
+    margin-top:20px;
+    padding:20px;
+    background:#082f49;
+    border-radius:12px;
+    font-size:1.25rem;
+}
+
+.timeline{
+    border-left:4px solid var(--azul2);
+    padding-left:25px;
+}
+
+.timeline article{
+    margin-bottom:25px;
+}
+
+.timeline strong{
+    color:var(--azul2);
+}
+
+footer{
+    background:#082f49;
+    color:white;
+    padding:45px 20px;
+}
+
+footer .footer-inner{
+    max-width:1100px;
+    margin:auto;
+}
+
+footer a{
+    color:#7dd3fc;
+}
+
+.small{
+    font-size:.88rem;
+    color:var(--cinza);
+}
+
+.source{
+    font-size:.85rem;
+    color:#64748b;
+}
+</style>
 </head>
+
 <body>
-    <h1>Bem-vindo ao Projeto Integrador</h1>
-    <p></p>
+
+<header>
+    <div class="gota">💧</div>
+    <h1>Água que não vemos</h1>
+    <p>
+        Água virtual, Química, Biologia, análise de dados e limites planetários:
+        compreender a água escondida em tudo aquilo que produzimos e consumimos.
+    </p>
+</header>
+
+<nav>
+<ul>
+    <li><a href="#conceito">Conceito</a></li>
+    <li><a href="#quimica">Química</a></li>
+    <li><a href="#dados">Dados</a></li>
+    <li><a href="#biologia">Biologia</a></li>
+    <li><a href="#limites">Limites planetários</a></li>
+    <li><a href="#calculadora">Calculadora</a></li>
+    <li><a href="#acoes">Ações</a></li>
+</ul>
+</nav>
+
+<main>
+
+<section id="conceito">
+
+<h2>1. O que é a água virtual?</h2>
+
+<p class="intro">
+Quando bebemos um copo de água, percebemos diretamente seu consumo.
+Mas grande parte da água utilizada pela humanidade está escondida nos
+processos de produção de alimentos, roupas, energia e outros produtos.
+Essa água indireta é chamada de <strong>água virtual</strong>.
+</p>
+
+<div class="highlight">
+<strong>Água virtual ≠ água simplesmente "desaparecida".</strong>
+O conceito representa a quantidade de água utilizada e/ou poluída ao longo
+da cadeia produtiva de um produto. A pegada hídrica pode ser dividida em
+água verde, azul e cinza.
+</div>
+
+<div class="card-grid">
+
+<div class="card">
+<strong class="numero">🌧️ Verde</strong>
+<p>
+Água proveniente da precipitação armazenada no solo e utilizada pelas
+plantas. É especialmente importante na agricultura.
+</p>
+</div>
+
+<div class="card">
+<strong class="numero">🏞️ Azul</strong>
+<p>
+Água retirada de rios, lagos e aquíferos e utilizada na produção.
+</p>
+</div>
+
+<div class="card">
+<strong class="numero">🧪 Cinza</strong>
+<p>
+Volume de água doce necessário para assimilar determinada carga de
+poluentes de acordo com padrões de qualidade.
+</p>
+</div>
+
+</div>
+
+<div class="flow">
+<div class="flow-item">🌧️ Chuva</div>
+<div class="arrow">→</div>
+<div class="flow-item">🌱 Produção agrícola</div>
+<div class="arrow">→</div>
+<div class="flow-item">🥩 Alimento</div>
+</div>
+
+<p class="small">
+A pegada hídrica considera também água utilizada e poluída ao longo da
+cadeia de produção, e não somente a água utilizada diretamente pelo consumidor.
+</p>
+
+</section>
+
+
+<section id="quimica">
+
+<h2>2. A Química por trás da água virtual</h2>
+
+<p>
+A água participa de praticamente todas as etapas da produção moderna.
+Na Química, ela pode atuar como <strong>solvente, reagente, meio de
+transferência de calor, agente de lavagem e componente de processos
+industriais</strong>.
+</p>
+
+<div class="chemistry">
+
+<h3>Água como solvente</h3>
+
+<p>
+Grande quantidade de processos químicos ocorre em solução aquosa.
+Íons, moléculas polares e compostos hidrossolúveis podem interagir com
+as moléculas de H₂O.
+</p>
+
+<div class="formula">
+H₂O ⇌ H⁺ + OH⁻
+
+NaCl(s) → Na⁺(aq) + Cl⁻(aq)
+
+CO₂(g) + H₂O(l) ⇌ H₂CO₃(aq)
+</div>
+
+<h3>Água, temperatura e energia</h3>
+
+<p>
+A elevada capacidade calorífica da água permite que ela seja utilizada
+em sistemas de resfriamento e transferência de calor. Portanto, mesmo
+quando a água não aparece no produto final, ela pode ser fundamental
+para sua fabricação.
+</p>
+
+<h3>Água e poluição</h3>
+
+<p>
+Substâncias nitrogenadas, fosfatadas, metais, pesticidas e outros
+compostos podem atingir corpos d'água. O conceito de <strong>água cinza</strong>
+relaciona-se justamente ao volume teórico de água necessário para
+diluir determinados poluentes até um padrão de qualidade.
+</p>
+
+</div>
+
+<div class="warning">
+<strong>Importante:</strong> uma grande pegada hídrica não significa
+automaticamente que toda essa água tenha sido retirada de rios ou
+aquíferos. A composição entre água verde, azul e cinza precisa ser
+analisada para compreender o impacto ambiental.
+</div>
+
+</section>
+
+
+<section id="dados">
+
+<h2>3. O tamanho do problema em números</h2>
+
+<p>
+Os números ajudam a revelar aquilo que os olhos não conseguem perceber.
+Os valores abaixo são médias globais e devem ser interpretados como
+indicadores, não como valores universais para todos os locais e sistemas
+de produção.
+</p>
+
+<div class="card-grid">
+
+<div class="card">
+<strong class="numero">≈ 70%</strong>
+<p>
+da retirada global de água doce é associada à agricultura, segundo dados
+das Nações Unidas.
+</p>
+</div>
+
+<div class="card">
+<strong class="numero">≈ 92%</strong>
+<p>
+da pegada hídrica global da humanidade no período 1996–2005 foi atribuída
+à produção agrícola.
+</p>
+</div>
+
+<div class="card">
+<strong class="numero">15.400 L</strong>
+<p>
+é a pegada hídrica média global aproximada de 1 kg de carne bovina.
+</p>
+</div>
+
+<div class="card">
+<strong class="numero">140 L</strong>
+<p>
+é a pegada hídrica aproximada de uma xícara de 125 mL de café.
+</p>
+</div>
+
+</div>
+
+<h3>Comparação entre produtos</h3>
+
+<table>
+<thead>
+<tr>
+    <th>Produto</th>
+    <th>Quantidade</th>
+    <th>Pegada hídrica global aproximada</th>
+    <th>Relação com 1 kg de carne bovina</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td>Carne bovina</td>
+    <td>1 kg</td>
+    <td>15.400 L</td>
+    <td>100%</td>
+</tr>
+<tr>
+    <td>Carne suína</td>
+    <td>1 kg</td>
+    <td>6.000 L</td>
+    <td>38,96%</td>
+</tr>
+<tr>
+    <td>Frango</td>
+    <td>1 kg</td>
+    <td>4.300 L</td>
+    <td>27,92%</td>
+</tr>
+<tr>
+    <td>Arroz</td>
+    <td>1 kg</td>
+    <td>3.400 L</td>
+    <td>22,08%</td>
+</tr>
+<tr>
+    <td>Batata</td>
+    <td>1 kg</td>
+    <td>250 L</td>
+    <td>1,62%</td>
+</tr>
+<tr>
+    <td>Leite</td>
+    <td>250 mL</td>
+    <td>250 L</td>
+    <td>1,62%</td>
+</tr>
+<tr>
+    <td>Café</td>
+    <td>125 mL</td>
+    <td>140 L</td>
+    <td>0,91%</td>
+</tr>
+</tbody>
+</table>
+
+<p class="source">
+Fonte principal dos valores: Water Footprint Network / Mekonnen & Hoekstra.
+Os valores representam médias globais e podem variar conforme clima,
+localização, produtividade, sistema de produção e cadeia de suprimentos.
+</p>
+
+
+<div class="chart">
+
+<h3>Gráfico 1 — Pegada hídrica de alimentos selecionados</h3>
+
+<svg viewBox="0 0 900 520" role="img"
+aria-label="Gráfico de barras comparando a pegada hídrica de alimentos">
+
+<!-- eixo -->
+<line x1="100" y1="430" x2="850" y2="430"
+stroke="#334155" stroke-width="2"/>
+
+<line x1="100" y1="60" x2="100" y2="430"
+stroke="#334155" stroke-width="2"/>
+
+<!-- linhas -->
+<line x1="100" y1="337" x2="850" y2="337"
+stroke="#e2e8f0"/>
+
+<line x1="100" y1="245" x2="850" y2="245"
+stroke="#e2e8f0"/>
+
+<line x1="100" y1="152" x2="850" y2="152"
+stroke="#e2e8f0"/>
+
+<text x="35" y="435">0</text>
+<text x="25" y="342">4 mil</text>
+<text x="25" y="250">8 mil</text>
+<text x="18" y="157">12 mil</text>
+<text x="18" y="65">16 mil</text>
+
+<!-- barras -->
+<rect class="bar" x="130" y="74" width="75" height="356"
+fill="#b91c1c"/>
+<text x="140" y="65" fill="#0f172a">15.400</text>
+<text x="135" y="455">Bovino</text>
+
+<rect class="bar" x="250" y="291" width="75" height="139"
+fill="#f97316"/>
+<text x="260" y="282">6.000</text>
+<text x="260" y="455">Suíno</text>
+
+<rect class="bar" x="370" y="330" width="75" height="100"
+fill="#eab308"/>
+<text x="380" y="321">4.300</text>
+<text x="380" y="455">Frango</text>
+
+<rect class="bar" x="490" y="351" width="75" height="79"
+fill="#ca8a04"/>
+<text x="500" y="342">3.400</text>
+<text x="500" y="455">Arroz</text>
+
+<rect class="bar" x="610" y="424" width="75" height="6"
+fill="#16a34a"/>
+<text x="620" y="416">250</text>
+<text x="625" y="455">Batata</text>
+
+<rect class="bar" x="730" y="427" width="75" height="3"
+fill="#0284c7"/>
+<text x="740" y="418">140</text>
+<text x="742" y="455">Café</text>
+
+<text x="365" y="500" fill="#475569">
+Litros de água por unidade indicada
+</text>
+
+</svg>
+
+</div>
+
+
+<h3>De onde vem a pegada hídrica global?</h3>
+
+<div class="chart">
+
+<svg viewBox="0 0 800 400" role="img"
+aria-label="Gráfico circular da composição da pegada hídrica global">
+
+<circle cx="400" cy="190" r="120"
+fill="none" stroke="#e2e8f0" stroke-width="70"/>
+
+<!-- aproximação visual dos percentuais -->
+<circle cx="400" cy="190" r="120"
+fill="none" stroke="#22c55e" stroke-width="70"
+stroke-dasharray="558 754"
+transform="rotate(-90 400 190)"/>
+
+<circle cx="400" cy="190" r="120"
+fill="none" stroke="#0284c7" stroke-width="70"
+stroke-dasharray="83 754"
+stroke-dashoffset="-558"
+transform="rotate(-90 400 190)"/>
+
+<circle cx="400" cy="190" r="120"
+fill="none" stroke="#64748b" stroke-width="70"
+stroke-dasharray="113 754"
+stroke-dashoffset="-641"
+transform="rotate(-90 400 190)"/>
+
+<text x="400" y="185" text-anchor="middle"
+font-size="30" font-weight="bold">9.087</text>
+
+<text x="400" y="215" text-anchor="middle"
+font-size="15">bilhões m³/ano</text>
+
+</svg>
+
+<div class="legend">
+<span><i class="dot" style="background:#22c55e"></i> Água verde — 74%</span>
+<span><i class="dot" style="background:#0284c7"></i> Água azul — 11%</span>
+<span><i class="dot" style="background:#64748b"></i> Água cinza — 15%</span>
+</div>
+
+<p class="source">
+Referência: Water Footprint Network, estimativa para 1996–2005.
+</p>
+
+</div>
+
+</section>
+
+
+<section id="biologia">
+
+<h2>4. Biologia: água, ecossistemas e biosfera</h2>
+
+<p>
+A água não é apenas um recurso para consumo humano. Ela participa
+diretamente do funcionamento dos ecossistemas.
+</p>
+
+<div class="card-grid">
+
+<div class="card">
+<h3>🌱 Plantas</h3>
+<p>
+A água do solo é absorvida pelas raízes e participa da fotossíntese,
+do transporte de nutrientes e da regulação térmica por transpiração.
+</p>
+</div>
+
+<div class="card">
+<h3>🦋 Biodiversidade</h3>
+<p>
+Rios, lagos, zonas úmidas, florestas e outros ambientes dependem de
+regimes hidrológicos relativamente estáveis.
+</p>
+</div>
+
+<div class="card">
+<h3>🌎 Ciclo da água</h3>
+<p>
+Evaporação, transpiração, condensação, precipitação, infiltração e
+escoamento conectam atmosfera, solo, vegetação e corpos d'água.
+</p>
+</div>
+
+</div>
+
+<div class="highlight">
+<strong>Água verde é especialmente importante para a Biologia.</strong>
+Ela corresponde à umidade armazenada no solo e utilizada pela vegetação.
+Por isso, alterar florestas, agricultura e cobertura do solo também pode
+alterar o ciclo hidrológico.
+</div>
+
+<h3>Uma reação em cadeia</h3>
+
+<div class="flow">
+<div class="flow-item">Desmatamento</div>
+<div class="arrow">→</div>
+<div class="flow-item">Menor transpiração</div>
+<div class="arrow">→</div>
+<div class="flow-item">Mudanças na umidade</div>
+</div>
+
+<div class="flow">
+<div class="flow-item">Agricultura intensiva</div>
+<div class="arrow">→</div>
+<div class="flow-item">Maior demanda hídrica</div>
+<div class="arrow">→</div>
+<div class="flow-item">Pressão sobre ecossistemas</div>
+</div>
+
+</section>
+
+
+<section id="limites">
+
+<h2>5. Água e os limites planetários</h2>
+
+<p class="intro">
+O conceito de <strong>limites planetários</strong> procura identificar
+processos fundamentais do Sistema Terra e definir um espaço operacional
+seguro para a humanidade.
+</p>
+
+<div class="danger">
+<strong>Atualização importante:</strong>
+o Planetary Health Check 2025 indica que <strong>7 dos 9 limites planetários
+estão atualmente transgredidos</strong>. A acidificação dos oceanos foi
+classificada como o sétimo limite ultrapassado nessa atualização.
+</div>
+
+<table>
+<thead>
+<tr>
+    <th>Limite planetário</th>
+    <th>Status atual</th>
+    <th>Relação com a água</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td>Mudança climática</td>
+    <td><span class="badge beyond">Transgredido</span></td>
+    <td>Altera evaporação, precipitação, secas e eventos extremos.</td>
+</tr>
+
+<tr>
+    <td>Integridade da biosfera</td>
+    <td><span class="badge beyond">Transgredido</span></td>
+    <td>Perda de biodiversidade compromete funções ecológicas.</td>
+</tr>
+
+<tr>
+    <td>Mudança do sistema terrestre</td>
+    <td><span class="badge beyond">Transgredido</span></td>
+    <td>Desmatamento e agricultura modificam o ciclo da água.</td>
+</tr>
+
+<tr>
+    <td>Mudança da água doce</td>
+    <td><span class="badge beyond">Transgredido</span></td>
+    <td>Envolve alterações de água azul e água verde.</td>
+</tr>
+
+<tr>
+    <td>Fluxos biogeoquímicos</td>
+    <td><span class="badge beyond">Transgredido</span></td>
+    <td>Nitrogênio e fósforo podem provocar eutrofização.</td>
+</tr>
+
+<tr>
+    <td>Novas entidades</td>
+    <td><span class="badge beyond">Transgredido</span></td>
+    <td>Inclui poluentes, substâncias químicas sintéticas e plásticos.</td>
+</tr>
+
+<tr>
+    <td>Acidificação dos oceanos</td>
+    <td><span class="badge beyond">Transgredido</span></td>
+    <td>Relacionada à absorção de CO₂ pelos oceanos.</td>
+</tr>
+
+<tr>
+    <td>Destruição do ozônio estratosférico</td>
+    <td><span class="badge safe">Dentro do limite</span></td>
+    <td>Apresenta recuperação após políticas internacionais.</td>
+</tr>
+
+<tr>
+    <td>Aerossóis atmosféricos</td>
+    <td><span class="badge safe">Globalmente dentro</span></td>
+    <td>Há, porém, impactos regionais importantes.</td>
+</tr>
+</tbody>
+</table>
+
+<div class="chart">
+
+<h3>Gráfico 2 — Situação dos limites planetários</h3>
+
+<svg viewBox="0 0 800 300"
+role="img"
+aria-label="Sete dos nove limites planetários estão transgredidos">
+
+<rect x="100" y="90" width="600" height="80"
+rx="40" fill="#dcfce7"/>
+
+<rect x="100" y="90" width="466" height="80"
+rx="40" fill="#dc2626"/>
+
+<text x="333" y="142"
+fill="white"
+font-size="28"
+font-weight="bold"
+text-anchor="middle">
+7 transgredidos
+</text>
+
+<text x="633" y="142"
+fill="#166534"
+font-size="25"
+font-weight="bold"
+text-anchor="middle">
+2
+</text>
+
+<text x="400" y="220"
+text-anchor="middle"
+font-size="18">
+7 / 9 = 77,8%
+</text>
+
+</svg>
+
+<p class="source">
+O percentual de 77,8% é uma conversão matemática de 7/9; não significa
+"77,8% de degradação do planeta".
+</p>
+
+</div>
+
+<div class="success">
+<strong>Conexão entre áreas:</strong>
+a água virtual relaciona Química, Biologia e Ciências da Terra.
+Uma cadeia produtiva pode consumir água, liberar nutrientes ou
+substâncias químicas, alterar habitats e ainda contribuir para mudanças
+climáticas. Os limites planetários devem, portanto, ser analisados
+como um sistema conectado.
+</div>
+
+</section>
+
+
+<section id="analise">
+
+<h2>6. Análise crítica dos dados</h2>
+
+<div class="card-grid">
+
+<div class="card">
+<h3>1. Volume não é impacto</h3>
+<p>
+15.400 litros por kg de carne bovina é uma média global. O impacto
+real depende de onde e quando a água é utilizada.
+</p>
+</div>
+
+<div class="card">
+<h3>2. Água verde ≠ água azul</h3>
+<p>
+Água de chuva armazenada no solo não exerce necessariamente a mesma
+pressão sobre os recursos hídricos que uma retirada de um aquífero.
+</p>
+</div>
+
+<div class="card">
+<h3>3. Localização importa</h3>
+<p>
+Um litro utilizado em uma região úmida pode ter consequências muito
+diferentes de um litro utilizado durante uma seca em uma bacia
+hidrográfica sobreexplorada.
+</p>
+</div>
+
+<div class="card">
+<h3>4. A cadeia importa</h3>
+<p>
+A pegada de um produto inclui etapas anteriores. No caso da pecuária,
+por exemplo, grande parte da água está relacionada à produção da
+alimentação dos animais.
+</p>
+</div>
+
+</div>
+
+<div class="highlight">
+<strong>Conclusão estatística:</strong>
+comparar produtos apenas pelo número de litros é útil para visualizar
+ordens de grandeza, mas insuficiente para medir sustentabilidade.
+É necessário considerar volume, origem da água, época do ano,
+poluição, eficiência, biodiversidade e condições socioambientais.
+</div>
+
+</section>
+
+
+<section id="calculadora">
+
+<h2>7. Calculadora de água virtual</h2>
+
+<p>
+Faça uma estimativa simples usando alguns valores médios globais.
+Os resultados são <strong>didáticos</strong> e não substituem uma
+avaliação específica da cadeia produtiva.
+</p>
+
+<div class="calculator">
+
+<h3 style="color:white">Consumo semanal</h3>
+
+<div class="calc-grid">
+
+<div>
+<label>Carne bovina (kg)</label>
+<input type="number" id="bovino" min="0" value="0" step="0.1">
+</div>
+
+<div>
+<label>Carne suína (kg)</label>
+<input type="number" id="suino" min="0" value="0" step="0.1">
+</div>
+
+<div>
+<label>Frango (kg)</label>
+<input type="number" id="frango" min="0" value="0" step="0.1">
+</div>
+
+<div>
+<label>Arroz (kg)</label>
+<input type="number" id="arroz" min="0" value="0" step="0.1">
+</div>
+
+<div>
+<label>Batata (kg)</label>
+<input type="number" id="batata" min="0" value="0" step="0.1">
+</div>
+
+<div>
+<label>Café (xícaras de 125 mL)</label>
+<input type="number" id="cafe" min="0" value="0" step="1">
+</div>
+
+</div>
+
+<button onclick="calcular()">Calcular água virtual</button>
+
+<div class="resultado" id="resultado">
+Informe os valores e clique em "Calcular".
+</div>
+
+</div>
+
+</section>
+
+
+<section id="acoes">
+
+<h2>8. Como reduzir a água que não vemos?</h2>
+
+<div class="card-grid">
+
+<div class="card">
+<h3>🥗 Alimentação</h3>
+<p>
+Diversificar a alimentação e reduzir o consumo excessivo de produtos
+com elevada pegada hídrica pode diminuir a água virtual associada à dieta.
+</p>
+</div>
+
+<div class="card">
+<h3>☕ Consumo consciente</h3>
+<p>
+Observar não apenas a quantidade de água usada diretamente em casa,
+mas também a água incorporada nos produtos consumidos.
+</p>
+</div>
+
+<div class="card">
+<h3>👕 Roupas</h3>
+<p>
+Comprar menos, aumentar a vida útil das peças, reutilizar e escolher
+produtos com cadeias produtivas mais responsáveis.
+</p>
+</div>
+
+<div class="card">
+<h3>🏭 Indústria</h3>
+<p>
+Aumentar a eficiência hídrica, tratar e reutilizar efluentes,
+reduzir poluentes e avaliar a pegada hídrica das cadeias de fornecedores.
+</p>
+</div>
+
+<div class="card">
+<h3>🌳 Ecossistemas</h3>
+<p>
+Proteger florestas, nascentes, rios, zonas úmidas e solos ajuda a manter
+os processos biológicos que regulam o ciclo da água.
+</p>
+</div>
+
+<div class="card">
+<h3>🔬 Ciência</h3>
+<p>
+Produzir e utilizar dados locais é essencial para tomar decisões
+melhores do que simplesmente comparar números globais.
+</p>
+</div>
+
+</div>
+
+<div class="timeline">
+
+<article>
+<strong>Passo 1 — Ver</strong>
+<p>
+Descobrir a água escondida nos produtos.
+</p>
+</article>
+
+<article>
+<strong>Passo 2 — Medir</strong>
+<p>
+Quantificar volumes, tipos de água e poluição.
+</p>
+</article>
+
+<article>
+<strong>Passo 3 — Localizar</strong>
+<p>
+Identificar as bacias hidrográficas e ecossistemas afetados.
+</p>
+</article>
+
+<article>
+<strong>Passo 4 — Comparar</strong>
+<p>
+Avaliar alternativas com menor pressão sobre água, clima e biodiversidade.
+</p>
+</article>
+
+<article>
+<strong>Passo 5 — Agir</strong>
+<p>
+Reduzir desperdícios, proteger ecossistemas e melhorar processos produtivos.
+</p>
+</article>
+
+</div>
+
+</section>
+
+
+<section>
+
+<h2>9. Síntese</h2>
+
+<div class="highlight">
+
+<p>
+<strong>A água que vemos é apenas uma pequena parte da história.</strong>
+</p>
+
+<p>
+Quando comemos, vestimos, produzimos ou transportamos algo, estamos
+participando de uma rede global de fluxos de matéria, energia e água.
+A Química ajuda a compreender as substâncias e os processos envolvidos;
+a Biologia explica as relações entre água, organismos e ecossistemas;
+e a análise de dados permite dimensionar o problema.
+</p>
+
+<p>
+O conceito de água virtual revela essa dimensão invisível. Já os
+limites planetários mostram que o problema não pode ser resolvido
+olhando apenas para o consumo humano direto: é necessário manter a
+integridade dos sistemas que tornam a própria água disponível.
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<div class="footer-inner">
+
+<h2 style="color:white">Referências e fontes</h2>
+
+<ul>
+<li>
+Water Footprint Network — conceitos de pegada hídrica, água verde,
+azul e cinza e dados de produtos.
+</li>
+
+<li>
+Mekonnen, M. M. & Hoekstra, A. Y. — estudos globais sobre a pegada
+hídrica de produtos agrícolas e animais.
+</li>
+
+<li>
+UNESCO / UN World Water Development Report — estatísticas globais
+sobre uso e retirada de água.
+</li>
+
+<li>
+Stockholm Resilience Centre — Planetary Boundaries.
+</li>
+
+<li>
+Planetary Health Check 2025 — avaliação mais recente dos nove
+limites planetários utilizada nesta página.
+</li>
+</ul>
+
+<p class="small" style="color:#bae6fd">
+Observação metodológica: valores de pegada hídrica são médias globais
+e podem variar substancialmente de acordo com localização, clima,
+tecnologia, produtividade, manejo e cadeia de suprimentos.
+</p>
+
+<p>
+Página educacional — Água Virtual, Química, Biologia e Sistema Terra.
+</p>
+
+</div>
+
+</footer>
+
+
+<script>
+
+function valor(id){
+    return parseFloat(document.getElementById(id).value) || 0;
+}
+
+function calcular(){
+
+    const bovino = valor("bovino") * 15400;
+    const suino  = valor("suino")  * 6000;
+    const frango = valor("frango") * 4300;
+    const arroz  = valor("arroz")  * 3400;
+    const batata = valor("batata") * 250;
+    const cafe   = valor("cafe")   * 140;
+
+    const total =
+        bovino +
+        suino +
+        frango +
+        arroz +
+        batata +
+        cafe;
+
+    const dias = total / 7;
+
+    document.getElementById("resultado").innerHTML = `
+        <strong>Resultado estimado:</strong><br><br>
+
+        💧 <strong>${total.toLocaleString("pt-BR",
+        {maximumFractionDigits:0})} litros</strong> de água virtual por semana.<br>
+
+        📅 Equivalente a aproximadamente
+        <strong>${dias.toLocaleString("pt-BR",
+        {maximumFractionDigits:0})} litros por dia</strong>,
+        considerando somente os itens informados.
+
+        <br><br>
+
+        <span style="font-size:.85rem;color:#bae6fd">
+        Este cálculo usa médias globais aproximadas e possui finalidade
+        educativa. A pegada real depende do local e do sistema de produção.
+        </span>
+    `;
+}
+
+</script>
+
 </body>
 </html>
